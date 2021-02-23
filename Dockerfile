@@ -36,11 +36,11 @@ RUN export LC_ALL=en_US.utf-8 \
 RUN mv /etc/pdns/pdns.conf  /etc/pdns/pdns.conf.bak \
     && mv /etc/pdns-recursor/recursor.conf  /etc/pdns-recursor/recursor.conf.bak
 
-ADD ./config/nginx/ /vue-msf/nginx/conf.d/
-ADD ./config/pdns/ /etc/pdns/
-ADD ./config/pdns-recursor/ /etc/pdns-recursor/
+COPY ./config/nginx/pdns-admin.conf /vue-msf/nginx/conf.d/pdns-admin.conf
+COPY ./config/pdns/pdns.conf /etc/pdns/pdns.conf
+COPY ./config/pdns-recursor/recursor.conf /etc/pdns-recursor/recursor.conf
+COPY ./config/pdns-recursor/forward-zones.conf /etc/pdns-recursor/forward-zones.conf
 COPY ./run.sh /vue-msf/data/www/powerdns-admin/run.sh
-
-#WORKDIR /vue-msf/dolphindb
-
-#ENTRYPOINT ["./dolphindb"]
+COPY ./config/supervisor/powerdns-admin.conf /vue-msf/supervisor/conf.d/powerdns-admin.conf
+COPY ./config/supervisor/powerdns-server.conf /vue-msf/supervisor/conf.d/powerdns-server.conf
+COPY ./config/supervisor/powerdns-recursor.conf /vue-msf/supervisor/conf.d/powerdns-recursor.conf
